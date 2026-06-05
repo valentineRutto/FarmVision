@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [], version = 1, exportSchema = true)
+@Database(entities = [WeatherEntity::class], version = 1, exportSchema = false)
 abstract class FarmVisionDatabase: RoomDatabase() {
 
     abstract fun farmVisionDao(): FarmVisionDao
@@ -30,4 +30,3 @@ abstract class FarmVisionDatabase: RoomDatabase() {
         }
     }
 }
-
