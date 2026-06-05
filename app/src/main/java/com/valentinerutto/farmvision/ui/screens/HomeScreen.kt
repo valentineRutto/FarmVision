@@ -207,7 +207,7 @@ fun HomeScreen(
             uiState.errorMessage?.let { message ->
                 WeatherErrorText(message = message)
             }
-            SectionTitle("7-day forecast")
+            SectionTitle("5-day forecast")
             ForecastRow(forecastDays)
             AiInsightCard()
             ScanFarmButton()
@@ -400,9 +400,11 @@ private fun WeatherHeroCard(weather: WeatherUiData?) {
     val temperature = currentWeather?.temperature?.toInt()?.let { "$it°" } ?: "--°"
     val condition = currentWeather?.condition_code?.takeIf { it.isNotBlank() } ?: "Cached weather"
     val windSpeed = currentWeather?.let { "${it.wind_speed} km/h" } ?: "--"
+
     val rainChance = weather?.dailyWeather?.firstOrNull()?.let {
         "${it.precipitation_probability}%"
     } ?: "--"
+
     val updatedTime = currentWeather?.updatedTimeLabel() ?: "--"
 
     Surface(
@@ -478,7 +480,7 @@ private fun WeatherHeroCard(weather: WeatherUiData?) {
 }
 
 private fun WeatherEntity.updatedTimeLabel(): String {
-    return time.substringAfter("T", missingDelimiterValue = time)
+    return   time.substringAfter("T", missingDelimiterValue = time)
         .takeIf { it.isNotBlank() }
         ?: "--"
 }
