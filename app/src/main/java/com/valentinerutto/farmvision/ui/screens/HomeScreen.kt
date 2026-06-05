@@ -86,6 +86,8 @@ import com.valentinerutto.farmvision.ui.theme.SunYellow
 import com.valentinerutto.farmvision.util.location.DeviceLocationProvider
 import com.valentinerutto.farmvision.util.location.LocationSettingsResult
 import com.valentinerutto.farmvision.util.location.LocationResult
+import com.valentinerutto.farmvision.util.toDayOfWeek
+import com.valentinerutto.farmvision.util.updatedTimeLabel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -242,7 +244,7 @@ private fun WeatherUiData?.toForecastDays(): List<ForecastDay> {
 
     return dailyWeather.take(5).mapIndexed { index, daily ->
         ForecastDay(
-            day = daily.date.toDayLabel(),
+            day = daily.date.toDayOfWeek(),
             temperature = "${daily.temp_max.toInt()}°",
             markerColor = daily.condition_code.toWeatherMarkerColor(),
             selected = index == 0
@@ -250,11 +252,7 @@ private fun WeatherUiData?.toForecastDays(): List<ForecastDay> {
     }
 }
 
-private fun String.toDayLabel(): String {
-    return takeIf { it.isNotBlank() }
-        ?.substringAfterLast("-")
-        ?: "--"
-}
+
 
 private fun String.toWeatherMarkerColor(): Color {
     val condition = lowercase()
@@ -407,6 +405,7 @@ private fun WeatherHeroCard(weather: WeatherUiData?) {
 
     val updatedTime = currentWeather?.updatedTimeLabel() ?: "--"
 
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -479,11 +478,7 @@ private fun WeatherHeroCard(weather: WeatherUiData?) {
     }
 }
 
-private fun WeatherEntity.updatedTimeLabel(): String {
-    return   time.substringAfter("T", missingDelimiterValue = time)
-        .takeIf { it.isNotBlank() }
-        ?: "--"
-}
+
 
 @Composable
 private fun WeatherErrorText(message: String) {
@@ -514,9 +509,10 @@ private fun WeatherStat(
             color = Color.White,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )
+        Spacer(modifier = Modifier.height(4.dp))
     }
 }
 
