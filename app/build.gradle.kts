@@ -59,6 +59,11 @@ android {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_21)
         }
+
+        buildFeatures{
+            compose = true
+            buildConfig = true
+        }
     }
 
 }
