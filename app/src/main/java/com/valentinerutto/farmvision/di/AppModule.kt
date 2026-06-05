@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 
  val appModule = module {
     single { MyApplication.INSTANCE }
-   single { WeatherRepository(get()) }
+   single { WeatherRepository(get(), get()) }
      viewModel { WeatherViewModel(get()) }
  }
 
@@ -35,6 +35,5 @@ val databaseModule = module {
     single { get<FarmVisionDatabase>().weatherDao() }
     single { get<FarmVisionDatabase>().treeAnalysisDao() }
 }
-
 
 
