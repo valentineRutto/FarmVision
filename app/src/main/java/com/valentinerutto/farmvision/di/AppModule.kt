@@ -31,7 +31,8 @@ import retrofit2.Retrofit
 
 val databaseModule = module {
     single { FarmVisionDatabase.getDatabase(get()) }
-    single { get<FarmVisionDatabase>().farmVisionDao() }
+    single { get<FarmVisionDatabase>().weatherDao() }
+    single { get<FarmVisionDatabase>().treeAnalysisDao() }
 }
 
 

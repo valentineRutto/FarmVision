@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WeatherEntity::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherEntity::class,TreeAnalysisEntity::class], version = 1, exportSchema = false)
 abstract class FarmVisionDatabase: RoomDatabase() {
 
-    abstract fun farmVisionDao(): FarmVisionDao
+    abstract fun weatherDao(): WeatherDao
+    abstract fun treeAnalysisDao(): TreeAnalysisDao
 
     companion object Companion {
         @Volatile
