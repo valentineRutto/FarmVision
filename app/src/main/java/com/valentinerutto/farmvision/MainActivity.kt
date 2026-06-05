@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.valentinerutto.farmvision.navigation.AppNavGraph
 import com.valentinerutto.farmvision.ui.theme.FarmVisionTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FarmVisionTheme {
-                Scaffold {
-                    Greeting("Android")
-                }
+                AppNavGraph()
             }
         }
 
