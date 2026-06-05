@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherDao {
 
         @Query("SELECT * FROM weather_table")
-        fun observeLatest(): Flow<WeatherEntity?>
+        fun observeCurrentLatest(): Flow<WeatherEntity?>
 
+       @Query("SELECT * FROM daily_table")
+       fun observeDaily(): Flow<List<DailyWeatherEntity>>
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         suspend fun upsert(entity: WeatherEntity)
     }
