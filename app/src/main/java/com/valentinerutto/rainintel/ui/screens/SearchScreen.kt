@@ -147,15 +147,15 @@ fun SearchScreen(
                 )
             }
 
-            SectionHeader(
-                title = "RECENT SEARCHES",
-                action = "Clear All",
-                onActionClick = viewModel::clearRecentSearches,
-            )
-            RecentSearchGrid(
-                cities = state.recentWeather,
-                onCityClick = onRecentCityClick,
-            )
+//            SectionHeader(
+//                title = "RECENT SEARCHES",
+//                action = "Clear All",
+//                onActionClick = viewModel::clearRecentSearches,
+//            )
+//            RecentSearchGrid(
+//                cities = state.recentWeather,
+//                onCityClick = onRecentCityClick,
+//            )
 
             state.errorMessage?.let { message ->
                 Text(
@@ -169,7 +169,8 @@ fun SearchScreen(
                 title = "SAVED CITIES",
                 action = "Edit",
             )
-            SavedCitiesList(cities = savedCities)
+            SavedCitiesList(               cities = state.recentWeather,
+                onCityClick = onRecentCityClick,)
 
             CurrentWeatherCard(cityWeather = state.selectedCityWeather)
 
@@ -480,7 +481,8 @@ private fun RecentCityCard(
 
 @Composable
 private fun SavedCitiesList(
-    cities: List<SavedCity>,
+    cities: List<CityEntity>,
+    onCityClick: (CityEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -488,14 +490,15 @@ private fun SavedCitiesList(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         cities.forEach { city ->
-            SavedCityRow(city = city)
+            SavedCityRow(city = city,{ onCityClick(city) })
         }
     }
 }
 
 @Composable
 private fun SavedCityRow(
-    city: SavedCity,
+    city: CityEntity,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -529,7 +532,7 @@ private fun SavedCityRow(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = "${city.temperature} • ${city.condition}",
+                    text = "${city.temperature} ",
                     color = FieldGreen.copy(alpha = 0.78f),
                     fontSize = 16.sp,
                     maxLines = 1,
@@ -540,7 +543,8 @@ private fun SavedCityRow(
                 imageVector = Icons.Outlined.ChevronRight,
                 contentDescription = null,
                 tint = FieldGreen,
-                modifier = Modifier.size(28.dp),
+                modifier = Modifier.size(28.dp). clickable(onClick = onClick),
+
             )
         }
     }
