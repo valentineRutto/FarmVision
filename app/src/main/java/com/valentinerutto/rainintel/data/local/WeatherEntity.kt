@@ -31,17 +31,6 @@ fun WeatherResponse.toWeatherEntity(): WeatherEntity {
     )
 }
 
-
-@Entity(tableName = "hourly_table")
-data class HourlyForecastEntity(
-    val id: Int = 0,
-    val time: String,
-    val temp: Int,
-    val condition: String,
-    val iconName: String,
-    val precipitation_probability: Int,
-    )
-
 @Entity(tableName = "daily_table")
 data class DailyWeatherEntity(
     @PrimaryKey(autoGenerate = true)

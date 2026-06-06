@@ -127,21 +127,10 @@ fun HomeScreen(
 
     var locationErrorMessage by remember { mutableStateOf<String?>(null) }
     var showTurnOnGpsAction by remember { mutableStateOf(false) }
+
     var locationName by remember { mutableStateOf("Current location") }
 
     val locationProvider = remember(context) { DeviceLocationProvider(context) }
-
-    LaunchedEffect(selectedCityLat, selectedCityLng, selectedCityName) {
-        val lat = selectedCityLat
-        val lng = selectedCityLng
-
-        if (lat != null && lng != null) {
-            selectedCityName?.takeIf { it.isNotBlank() }?.let { name ->
-                locationName = name
-            }
-            weatherViewModel.loadWeatherForSelectedCity(lat, lng)
-        }
-    }
 
     fun showLocationError(message: String, canTurnOnGps: Boolean = false) {
         locationErrorMessage = message
@@ -210,6 +199,25 @@ fun HomeScreen(
 
         coroutineScope.launch {
             
+            loadWeatherFromCurrentLocation(
+                locationProvider = locationProvider,
+                weatherViewModel = weatherViewModel,
+                onLocationNameChanged = { name -> locationName = name },
+                onLocationError = ::showLocationError
+            )
+        }
+    }
+
+    LaunchedEffect(selectedCityLat, selectedCityLng, selectedCityName) {
+        val lat = selectedCityLat
+        val lng = selectedCityLng
+
+        if (lat != null && lng != null) {
+            selectedCityName?.takeIf { it.isNotBlank() }?.let { name ->
+                locationName = name
+            }
+            weatherViewModel.loadWeatherForSelectedCity(lat, lng)
+        } else if (locationProvider.hasLocationPermission()) {
             loadWeatherFromCurrentLocation(
                 locationProvider = locationProvider,
                 weatherViewModel = weatherViewModel,
