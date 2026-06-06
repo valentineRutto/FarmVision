@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.valentinerutto.rainintel.ui.screens.HomeScreen
+import com.valentinerutto.rainintel.ui.screens.SearchScreen
 
 @Composable
 fun AppNavGraph() {
@@ -15,7 +16,8 @@ fun AppNavGraph() {
             HomeScreen()
         }
 
-        composable("settings") {
+        composable("search") {
+            SearchScreen()
 
         }
     }

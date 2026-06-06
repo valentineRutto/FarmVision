@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.WbSunny
@@ -88,7 +89,9 @@ import com.valentinerutto.rainintel.util.location.DeviceLocationProvider
 import com.valentinerutto.rainintel.util.location.LocationNameResult
 import com.valentinerutto.rainintel.util.location.LocationSettingsResult
 import com.valentinerutto.rainintel.util.location.LocationResult
+import com.valentinerutto.rainintel.util.toWeatherMarkerColor
 import com.valentinerutto.rainintel.util.updatedTimeLabel
+import com.valentinerutto.rainintel.util.withSelectedIndex
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -221,8 +224,7 @@ fun HomeScreen(
                 days = forecastDays,
                 onForecastClick = { index -> selectedForecastIndex = index }
             )
-            AiInsightCard()
-            ScanFarmButton()
+
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
@@ -262,22 +264,7 @@ private fun WeatherUiData?.toForecastDays(selectedIndex: Int): List<ForecastDay>
     }
 }
 
-private fun List<ForecastDay>.withSelectedIndex(selectedIndex: Int): List<ForecastDay> {
-    return mapIndexed { index, forecastDay ->
-        forecastDay.copy(selected = index == selectedIndex)
-    }
-}
 
-
-
-private fun String.toWeatherMarkerColor(): Color {
-    val condition = lowercase()
-    return when {
-        "rain" in condition || "shower" in condition -> RainBlue
-        "sun" in condition || "clear" in condition -> SunYellow
-        else -> Mint
-    }
-}
 
 private suspend fun loadWeatherFromCurrentLocation(
     locationProvider: DeviceLocationProvider,
@@ -654,49 +641,14 @@ private fun AiInsightCard() {
     }
 }
 
-@Composable
-private fun ScanFarmButton() {
-    Button(
-        onClick = {},
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .height(58.dp),
-        shape = RoundedCornerShape(14.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = FreshGreen),
-    ) {
-        Icon(
-            imageVector = Icons.Filled.CameraAlt,
-            contentDescription = null,
-            modifier = Modifier.size(18.dp),
-            tint = Color.White,
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column(horizontalAlignment = Alignment.Start) {
-            Text(
-                text = "Scan my farm",
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
-                lineHeight = 16.sp,
-            )
-            Text(
-                text = "Analyse trees with your camera",
-                color = Color.White.copy(alpha = 0.72f),
-                fontSize = 11.sp,
-                lineHeight = 13.sp,
-            )
-        }
-    }
-}
+
 
 @Composable
 private fun RainIntelBottomBar() {
+
     val destinations = listOf(
         BottomNavDestination("Home", Icons.Filled.Home, selected = true),
-        BottomNavDestination("Scan", Icons.Filled.CameraAlt),
-        BottomNavDestination("History", Icons.Filled.History),
-        BottomNavDestination("Settings", Icons.Filled.Settings),
+        BottomNavDestination("Search", Icons.Filled.Search)
     )
 
     Row(

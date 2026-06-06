@@ -2,6 +2,7 @@ package com.valentinerutto.rainintel.di
 
 import com.valentinerutto.rainintel.MyApplication
 import com.valentinerutto.rainintel.data.WeatherRepository
+import com.valentinerutto.rainintel.data.local.CitySeeder
 import com.valentinerutto.rainintel.data.local.RainIntelDatabase
 import com.valentinerutto.rainintel.data.network.ApiService
 import com.valentinerutto.rainintel.ui.WeatherViewModel
@@ -30,6 +31,6 @@ import retrofit2.Retrofit
 val databaseModule = module {
     single { RainIntelDatabase.getDatabase(get()) }
     single { get<RainIntelDatabase>().weatherDao() }
-    single { get<RainIntelDatabase>().treeAnalysisDao() }
+    single { get<RainIntelDatabase>().cityDao() }
+    single { CitySeeder(get(), get()) }
 }
-

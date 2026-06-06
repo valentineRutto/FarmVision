@@ -17,6 +17,7 @@ android-appcompat = "1.7.1"
 koin-annotations = "2.2.0"
 ksp = "2.2.0-2.0.2"
 playServicesLocation = "21.3.0"
+opencsv = "5.9"
 
 retrofit = "2.11.0"
 okhttp = "4.12.0"
@@ -71,6 +72,7 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
+opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

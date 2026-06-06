@@ -32,6 +32,14 @@ fun WeatherResponse.toWeatherEntity(): WeatherEntity {
 }
 
 
+@Entity(tableName = "hourly_table")
+data class HourlyForecastEntity(
+    val time: String,
+    val temp: Int,
+    val condition: String,
+    val iconName: String
+)
+
 @Entity(tableName = "daily_table")
 data class DailyWeatherEntity(
     @PrimaryKey(autoGenerate = true)
@@ -48,7 +56,6 @@ data class DailyWeatherEntity(
     val temp_min: Double,
     val wind_max: Double,
     val dayOfTheWeek: String
-
 )
 
 fun mapToDailyWeatherEntity(weatherResponse: WeatherResponse): List<DailyWeatherEntity> {

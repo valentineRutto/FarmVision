@@ -110,6 +110,7 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.gson)
     implementation(libs.play.services.location)
+    implementation(libs.opencsv)
 
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)

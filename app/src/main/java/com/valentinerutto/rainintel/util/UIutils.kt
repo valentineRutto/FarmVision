@@ -1,6 +1,11 @@
 package com.valentinerutto.rainintel.util
 
+import androidx.compose.ui.graphics.Color
 import com.valentinerutto.rainintel.data.local.WeatherEntity
+import com.valentinerutto.rainintel.data.models.ForecastDay
+import com.valentinerutto.rainintel.ui.theme.Mint
+import com.valentinerutto.rainintel.ui.theme.RainBlue
+import com.valentinerutto.rainintel.ui.theme.SunYellow
 import java.util.Locale
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -57,7 +62,22 @@ private fun String.toDayLabel(): String {
         ?.substringAfterLast("-")
         ?: "--"
 }
+ fun List<ForecastDay>.withSelectedIndex(selectedIndex: Int): List<ForecastDay> {
+    return mapIndexed { index, forecastDay ->
+        forecastDay.copy(selected = index == selectedIndex)
+    }
+}
 
+
+
+ fun String.toWeatherMarkerColor(): Color {
+    val condition = lowercase()
+    return when {
+        "rain" in condition || "shower" in condition -> RainBlue
+        "sun" in condition || "clear" in condition -> SunYellow
+        else -> Mint
+    }
+}
 private const val API_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm"
 private const val DISPLAY_DATE_TIME_PATTERN ="yyyy-MM-dd\nHH:mm"
 
