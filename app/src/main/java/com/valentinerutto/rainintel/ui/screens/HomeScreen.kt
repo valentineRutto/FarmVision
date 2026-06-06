@@ -249,30 +249,8 @@ fun HomeScreen(
     }
 }
 
-private fun WeatherUiData?.toForecastDays(selectedIndex: Int): List<ForecastDay> {
 
-    val dailyWeather = this?.dailyWeather.orEmpty()
 
-    if (dailyWeather.isEmpty()) {
-        return listOf(
-            ForecastDay("Mon", "23°", Mint),
-            ForecastDay("Tue", "26°", SunYellow),
-            ForecastDay("Wed", "19°", RainBlue),
-            ForecastDay("Thu", "18°", RainBlue),
-            ForecastDay("Fri", "22°", Mint),
-        ).withSelectedIndex(selectedIndex)
-
-    }
-
-    return dailyWeather.take(5).mapIndexed { index, daily ->
-        ForecastDay(
-            day = daily.dayOfTheWeek,
-            temperature = "${daily.temp_max.toInt()}°",
-            markerColor = daily.condition_code.toWeatherMarkerColor(),
-            selected = index == selectedIndex
-        )
-    }
-}
 
 private data class DashboardWeather(
     val temperature: String,
@@ -503,12 +481,6 @@ private fun SevenDayForecastCard(
                     color = FieldGreen,
                     fontSize = 22.sp,
                     letterSpacing = 0.sp,
-                )
-                Icon(
-                    imageVector = Icons.Outlined.CalendarMonth,
-                    contentDescription = null,
-                    tint = FieldGreen,
-                    modifier = Modifier.size(20.dp),
                 )
             }
 
@@ -856,116 +828,6 @@ private fun WeatherStat(
     }
 }
 
-@Composable
-private fun SectionTitle(title: String) {
-    Text(
-        text = title,
-        color = DeepGreen,
-        fontSize = 13.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 8.dp),
-    )
-}
-
-@Composable
-private fun ForecastRow(
-    days: List<ForecastDay>,
-    onForecastClick: (Int) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        days.forEachIndexed { index, day ->
-            ForecastChip(
-                day = day,
-                onClick = { onForecastClick(index) },
-                modifier = Modifier.weight(1f),
-            )
-        }
-    }
-}
-
-@Composable
-private fun ForecastChip(
-    day: ForecastDay,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val background = if (day.selected) InsightGreen else Color.White
-    val borderColor = if (day.selected) FreshGreen else ForecastBorder
-
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .clickable(onClick = onClick)
-            .background(background)
-            .border(0.5.dp, borderColor, RoundedCornerShape(12.dp))
-            .padding(horizontal = 4.dp, vertical = 9.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = day.day,
-            color = DeepGreen,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-        )
-        Box(
-            modifier = Modifier
-                .padding(vertical = 6.dp)
-                .size(16.dp)
-                .clip(CircleShape)
-                .background(day.markerColor),
-        )
-        Text(
-            text = day.temperature,
-            color = FieldGreen,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-        )
-    }
-}
-
-@Composable
-private fun AiInsightCard() {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = InsightGreen,
-        border = BorderStroke(0.5.dp, InsightBorder),
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    modifier = Modifier
-                        .size(7.dp)
-                        .clip(CircleShape)
-                        .background(InsightDot),
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "AI INSIGHT",
-                    color = InsightLabel,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Text(
-                text = "Light showers expected Wednesday - ideal to delay spraying. Tuesday's warmth favours tea leaf growth. Soil moisture currently adequate.",
-                color = FieldGreen,
-                fontSize = 12.sp,
-                lineHeight = 18.sp,
-                modifier = Modifier.padding(top = 6.dp),
-            )
-        }
-    }
-}
 
 @Preview(showBackground = true, widthDp = 320)
 @Composable
