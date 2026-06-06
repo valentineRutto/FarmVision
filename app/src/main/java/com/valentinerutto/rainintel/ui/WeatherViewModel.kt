@@ -15,8 +15,12 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
     private val _uiState = MutableStateFlow(WeatherUiState())
     val uiState: StateFlow<WeatherUiState> = _uiState.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
-
+    val allCities: StateFlow<List<CityEntity>>
+    val savedCities: StateFlow<List<CityEntity>>
+    val recentSearches: StateFlow<List<CityEntity>>
 
 
 
