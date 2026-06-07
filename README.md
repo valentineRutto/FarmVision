@@ -140,3 +140,31 @@ If no weather has been cached yet, the widget shows `--°` and asks the user to 
 - **Coil**
 - **OpenCSV**
 - **MockK + JUnit**
+
+## UI Preview
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="docs/images/widget-preview.png">
+        <img src="docs/images/widget-preview.png" alt="RainIntel home screen widget" width="220" />
+      </a>
+      <br />
+      <strong>Home Widget</strong>
+    </td>
+    <td align="center">
+      <a href="docs/images/search-screen.png">
+        <img src="docs/images/search-screen.png" alt="RainIntel saved cities search screen" width="220" />
+      </a>
+      <br />
+      <strong>Search + Saved Cities</strong>
+    </td>
+    <td align="center">
+      <a href="docs/images/home-forecast.png">
+        <img src="docs/images/home-forecast.png" alt="RainIntel 7-day forecast screen" width="220" />
+      </a>
+      <br />
+      <strong>7-Day Forecast</strong>
+    </td>
+  </tr>
+</table>
