@@ -143,6 +143,8 @@ If no weather has been cached yet, the widget shows `--°` and asks the user to 
 
 ## UI Preview
 
+Screenshot assets are available in [`docs/images`](docs/images).
+
 <table>
   <tr>
     <td align="center">
