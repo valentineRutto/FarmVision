@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.valentinerutto.rainintel.BuildConfig
 import com.valentinerutto.rainintel.navigation.AppNavGraph
 import com.valentinerutto.rainintel.ui.theme.RainIntelTheme
 import com.valentinerutto.rainintel.util.WeatherNotificationHelper
@@ -58,6 +59,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleNotificationIntent(intent: Intent?) {
+        if (BuildConfig.DEBUG && intent?.action == ACTION_SIMULATE_WEATHER_ALERTS) {
+            WeatherNotificationHelper(this).showSimulatedWeatherAlerts()
+            return
+        }
+
         if (intent?.action == WeatherNotificationHelper.ACTION_OPEN_WEATHER_ALERT) {
             val notificationId = intent.getIntExtra(
                 WeatherNotificationHelper.EXTRA_NOTIFICATION_ID,
@@ -68,5 +74,10 @@ class MainActivity : ComponentActivity() {
                 NotificationManagerCompat.from(this).cancel(notificationId)
             }
         }
+    }
+
+    private companion object {
+        const val ACTION_SIMULATE_WEATHER_ALERTS =
+            "com.valentinerutto.rainintel.SIMULATE_WEATHER_ALERTS"
     }
 }

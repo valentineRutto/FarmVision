@@ -172,5 +172,12 @@ Screenshot assets are available in [`docs/images`](docs/images).
       <br />
       <strong>7-Day Forecast</strong>
     </td>
+    <td align="center">
+      <a href="docs/images/notifications-preview.png">
+        <img src="docs/images/notifications-preview.png" alt="RainIntel weather alert notifications" width="220" />
+      </a>
+      <br />
+      <strong>Weather Alerts</strong>
+    </td>
   </tr>
 </table>

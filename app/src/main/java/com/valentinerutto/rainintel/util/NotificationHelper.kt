@@ -8,6 +8,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -52,7 +54,8 @@ class WeatherNotificationHelper(
             context,
             WEATHER_ALERT_CHANNEL_ID
         )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_notification_weather)
+            .setLargeIcon(context.drawableToBitmap(R.drawable.ic_sun_cloud))
             .setContentTitle(alert.title)
             .setContentText(alert.message)
             .setStyle(NotificationCompat.BigTextStyle().bigText(alert.message))
@@ -64,6 +67,24 @@ class WeatherNotificationHelper(
         NotificationManagerCompat.from(context).notify(
             alert.notificationId,
             notification
+        )
+    }
+
+    fun showSimulatedWeatherAlerts() {
+        createNotificationChannel()
+        showWeatherAlert(
+            WeatherAlert(
+                notificationId = SIMULATED_UV_NOTIFICATION_ID,
+                title = "☀️ High UV Alert",
+                message = "UV index will reach 8.4 at 1 PM in Nairobi. Wear sunscreen and avoid long sun exposure."
+            )
+        )
+        showWeatherAlert(
+            WeatherAlert(
+                notificationId = SIMULATED_RAIN_NOTIFICATION_ID,
+                title = "🌧 Rain Expected",
+                message = "There is a 75% chance of rain at 4 PM today. Carry an umbrella."
+            )
         )
     }
 
@@ -81,5 +102,18 @@ class WeatherNotificationHelper(
         const val EXTRA_NOTIFICATION_ID = "extra_notification_id"
         const val UNKNOWN_NOTIFICATION_ID = -1
         private const val WEATHER_ALERT_CHANNEL_NAME = "Weather alerts"
+        private const val SIMULATED_UV_NOTIFICATION_ID = 2101
+        private const val SIMULATED_RAIN_NOTIFICATION_ID = 2102
     }
+}
+
+private fun Context.drawableToBitmap(drawableResId: Int): Bitmap? {
+    val drawable = ContextCompat.getDrawable(this, drawableResId) ?: return null
+    val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 128
+    val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: 128
+    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.draw(canvas)
+    return bitmap
 }
