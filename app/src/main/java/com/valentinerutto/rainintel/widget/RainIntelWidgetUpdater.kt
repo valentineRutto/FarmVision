@@ -59,11 +59,8 @@ class RainIntelWidgetUpdater(
     }
 
     private fun openAppPendingIntent(): PendingIntent {
-        var flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        var flags =
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
 
         return PendingIntent.getActivity(
             context,
